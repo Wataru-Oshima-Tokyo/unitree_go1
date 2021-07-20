@@ -1,0 +1,44 @@
+
+<launch>
+
+ <master auto="start"/>     
+      <arg name="user_debug" default="false"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find a1_description)/xacro/robot.xacro'
+            DEBUG:=$(arg user_debug)"/>
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    </node>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"></node>	
+ <!-- Run the map server --> 
+    <!--node name="map_server" pkg="map_server" type="map_server" args="$(find mapdata)/map/roommap_third.yaml"></node-->
+ 
+ 
+ <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom"/>
+ <node pkg="tf2_ros" type="static_transform_publisher" name="odom_to_base_link" args="0 0 0 0 0 0  odom base_link"/>
+ <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_laser" args="0 0 0 0 0 0  base_link laser"/>
+ <node pkg="tf2_ros" type="static_transform_publisher" name="camera_link_to_map" args="0 0 0 0 0 0 base_link camera_link"/>
+ <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_base" args="0 0 0 0 0 0 base_link base"/>
+ <!-- launch the image to pc -->
+       <!--include file="$(find image_publisher)/launch/depthimgTopc.launch"></include-->
+
+ <!--- Run AMCL -->    
+ <node pkg="amcl" type="amcl" name="amcl" output="screen">
+       <rosparam command="load"	file="$(find tracer_2dnav)/config/amcl_params_tf.yaml"/>
+ </node>
+
+ <!-- launch the waypoints nav -->
+        <include file="$(find fulanghua_waypoints_nav)/launch/nav.launch"></include>
+
+ <!--- Run Waypoints -->
+        <include file="$(find orne_waypoints_editor)/launch/edit_waypoints_viz.launch"></include>
+ 
+ <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+   <rosparam file="$(find tracer_2dnav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+   <rosparam file="$(find tracer_2dnav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" /> 
+   <rosparam file="$(find tracer_2dnav)/config/local_costmap_params.yaml" command="load" />
+   <rosparam file="$(find tracer_2dnav)/config/global_costmap_params.yaml" command="load" /> 
+   <rosparam file="$(find tracer_2dnav)/config/base_local_planner_params.yaml" command="load" />      
+  <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+ </node>
+</launch>
