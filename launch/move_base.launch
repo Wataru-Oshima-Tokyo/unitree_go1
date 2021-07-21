@@ -11,7 +11,7 @@
     </node>
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"></node>	
  <!-- Run the map server --> 
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find unitree_a1)/map/roommap_third.yaml"></node>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find unitree_a1)/map/map.yaml"></node>
  
  
  <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom"/>
