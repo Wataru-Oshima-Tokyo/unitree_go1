@@ -3,12 +3,12 @@ recovery_behavior_enabled: false
 clearing_rotation_allowed: false
 
 TrajectoryPlannerROS:
-   max_vel_x: 0.4
+   max_vel_x: 0.2
    min_vel_x: 0.1
    max_vel_y: 0.0   
    min_vel_y: 0.0
-   max_vel_theta: 1.0
-   min_vel_theta: -1.0
+   max_vel_theta: 0.2
+   min_vel_theta: -0.2
    min_in_place_vel_theta: 0.4
    escape_vel: -0.1
    acc_lim_x: 0.4
@@ -37,5 +37,5 @@ TrajectoryPlannerROS:
    vx_samples: 8
    vy_samples: 0   
    vtheta_samples: 20
-   dwa: true
+   dwa: false
    simple_attractor: false
