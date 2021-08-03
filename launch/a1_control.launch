@@ -3,7 +3,7 @@
 	<include file="$(find unitree_legged_real)/launch/real.launch"></include>
         <include file="$(find unitree_legged_real)/launch/control_cmd_vel.launch"></include>    
   <!-- launch the rplidar-->
-	<include file="$(find rplidar_ros)/launch/rplidar.launch"></include>
+	<include file="$(find rplidar_ros)/launch/rplidar_a3.launch"></include>
    <!-- launch the realsense-->
         <include file="$(find realsense2_camera)/launch/rs_camera.launch"></include>
    <!-- launch the depthtopc-->
