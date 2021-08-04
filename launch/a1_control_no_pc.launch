@@ -5,9 +5,7 @@
   <!-- launch the rplidar-->
 	<include file="$(find rplidar_ros)/launch/rplidar_a3.launch"></include>
    <!-- launch the realsense-->
-        <include file="$(find realsense2_camera)/launch/rs_camera.launch"></include>
+        <!--include file="$(find realsense2_camera)/launch/rs_camera.launch"></include-->
    <!-- launch the depthtopc-->
-        <include file="$(find realsense2_camera)/launch/depthimgTopc.launch"></include>
-   <!-- launch the pointcloud to laser-->
-        <include file="$(find unitree_a1)/launch/pointToLaserScan.launch"></include>
+        <!--include file="$(find realsense2_camera)/launch/depthimgTopc.launch"></include-->
 </launch>
