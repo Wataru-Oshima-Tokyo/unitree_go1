@@ -20,4 +20,3 @@
     <remap from="scan" to="/pointcloud2/scan"/>
   </node>
 </launch>
-

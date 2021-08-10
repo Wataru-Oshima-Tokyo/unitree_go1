@@ -1,9 +1,0 @@
-<launch>
-    <node pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" name="depthimage_to_laserscan">
-
-    <remap from="image" to="/camera/depth/image_rect_raw"/>
-    <remap from="scan" to="pointcloud2/scan"/>
-
-    </node>
-   
-</launch>

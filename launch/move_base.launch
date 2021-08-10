@@ -37,7 +37,7 @@
    <rosparam file="$(find unitree_a1)/config/local_costmap_params.yaml" command="load" />
    <rosparam file="$(find unitree_a1)/config/global_costmap_params.yaml" command="load" /> 
   
-   <rosparam file="$(find unitree_a1)/config/a1_local_planner_params.yaml" command="load" />
+   <rosparam file="$(find unitree_a1)/config/base_local_planner_params.yaml" command="load" />
    <!--rosparam file="$(find unitree_a1)/config/nav_obstacles_params.yaml"        command="load" /-->
   <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
  </node>
