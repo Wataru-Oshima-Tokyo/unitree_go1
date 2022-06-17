@@ -6,7 +6,7 @@ int main(int argc, char** argv)
 {
   ros::init(argc, argv, "adv_time");
   ros::NodeHandle n;
-  ros::Publisher tick_pub = n.advertise<std_msgs::Empty>("clock", 10);
+  ros::Publisher tick_pub = n.advertise<std_msgs::Empty>("time_tick", 10);
 
   ros::Time::waitForValid();
   ros::Time ros_begin = ros::Time::now();
