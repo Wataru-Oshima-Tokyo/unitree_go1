@@ -6,7 +6,7 @@ int main(int argc, char** argv)
 {
   ros::init(argc, argv, "adv_time");
   ros::NodeHandle n;
-  ros::Publisher tick_pub = n.advertise<ros::Time>("clock", 1000);
+  ros::Publisher tick_pub = n.advertise<std_msgs::Empty>("time_tick", 10);
 
   ros::Time::waitForValid();
   ros::Time ros_begin = ros::Time::now();
@@ -16,7 +16,8 @@ int main(int argc, char** argv)
   while (ros::ok())
   {
     ROS_INFO("TICK");
-    
+    std_msgs::Empty msg;
+    tick_pub.publish(msg);
 
     ros::Time ros_now = ros::Time::now();
     ros::Duration ros_duration = ros_now - ros_begin;
@@ -30,7 +31,7 @@ int main(int argc, char** argv)
     time_t t = ros::Time::now().sec;
     strftime(date, sizeof(date), "%Y/%m/%d %a %H:%M:%S", localtime(&t));
     ROS_INFO("%s", date);
-    tick_pub.publish(ros_now);
+
     ros::spinOnce();
     loop_rate.sleep();
   }
