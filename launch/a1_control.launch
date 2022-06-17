@@ -1,7 +1,8 @@
 <launch>
+  <param name ="/use_sim_time" value="true"/>
    <!-- launch the /cmd_vel, /odom,/tf -->
 	<include file="$(find unitree_legged_real)/launch/real.launch"></include>
-        <node name="control_lcm" pkg="unitree_legged_real" type="control_lcm" respawn="false" output="screen"></node>   
+  <node name="control_lcm" pkg="unitree_legged_real" type="control_lcm" respawn="false" output="screen"></node>   
 	<node name="odom_node" pkg="unitree_legged_real" type="odom_node" respawn="false" output="screen"></node>
   <!-- launch the rplidar-->
 	<include file="$(find rplidar_ros)/launch/rplidar_s1.launch"></include>
