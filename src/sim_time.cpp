@@ -17,19 +17,18 @@ int main(int argc, char** argv)
   {
     ROS_INFO("TICK");
     
-
     ros::Time ros_now = ros::Time::now();
-    ros::Duration ros_duration = ros_now - ros_begin;
-    ROS_INFO("ROS: %u.09%u", ros_duration.sec, ros_duration.nsec);
+    // ros::Duration ros_duration = ros_now - ros_begin;
+    // ROS_INFO("ROS: %u.09%u", ros_duration.sec, ros_duration.nsec);
 
-    ros::WallTime wall_now = ros::WallTime::now();
-    ros::WallDuration wall_duration = wall_now - wall_begin;
-    ROS_INFO("WALL:%u.%09u", wall_duration.sec, wall_duration.nsec);
+    // ros::WallTime wall_now = ros::WallTime::now();
+    // ros::WallDuration wall_duration = wall_now - wall_begin;
+    // ROS_INFO("WALL:%u.%09u", wall_duration.sec, wall_duration.nsec);
 
-    char date[64];
-    time_t t = ros::Time::now().sec;
-    strftime(date, sizeof(date), "%Y/%m/%d %a %H:%M:%S", localtime(&t));
-    ROS_INFO("%s", date);
+    // char date[64];
+    // time_t t = ros::Time::now().sec;
+    // strftime(date, sizeof(date), "%Y/%m/%d %a %H:%M:%S", localtime(&t));
+    // ROS_INFO("%s", date);
     tick_pub.publish(ros_now);
     ros::spinOnce();
     loop_rate.sleep();
