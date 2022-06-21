@@ -14,7 +14,7 @@
  #include <map>
 
  class POSTURE{
-    private:
+   //  private:
 
     public:
       ros::ServiceServer action_start;
@@ -27,8 +27,11 @@
       const std::string ACTION_EXE_TOPIC = "cmd_vel_executing";
       struct timespec start, stop;
       double fstart, fstop;
-
+      POSTURE();
+      ~POSTURE();
  };
+   POSTURE::POSTURE(){}
+   POSTURE::~POSTURE(){}
 
    bool POSTURE::actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res){
       geometry_msgs::Twist cmd;
