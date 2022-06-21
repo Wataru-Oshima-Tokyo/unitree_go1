@@ -149,7 +149,9 @@ add_dependencies(posture_srv ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORT
  target_link_libraries(sim_time_node
    ${catkin_LIBRARIES}
 )
-
+target_link_libraries(posture_srv
+${catkin_LIBRARIES}
+)
 #############
 ## Install ##
 #############
