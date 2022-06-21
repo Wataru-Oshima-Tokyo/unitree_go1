@@ -13,7 +13,7 @@
  #include <map>
 
  class POSTURE{
-    prviate:
+    private:
 
     public:
       ros::ServiceServer action_start;
@@ -23,11 +23,11 @@
 
       const std::string ACTION_SERVICE_START = "/action/start";
       const std::string ACTION_CMD_TOPIC = "/cmd_vel_posture";
-      const std::string ACTION_EXE_TOPIC "cmd_vel_executing";
+      const std::string ACTION_EXE_TOPIC = "cmd_vel_executing";
 
  };
 
-   POSTURE::actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res){
+   bool POSTURE::actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res){
       geometry_msgs::Twist cmd;
       
       if(req.action ==0){
@@ -48,7 +48,7 @@
  int main (int argc, char** argv){
    ros::init(argc, argv, "postrue services");
    POSTURE ps;
-   ps.action_start = ps.nh.advertise(ps.ACTION_SERVICE_START, &POSTURE::actions_srv, &ps)
+   ps.action_start = ps.nh.advertiseService(ps.ACTION_SERVICE_START, &POSTURE::actions_srv, &ps)
    ps.action_cmd = ps.nh.advertise<geometry_msgs::Twist>(ps.ACTION_CMD_TOPIC,1000);
    ps.action_execution = ps.nh.advertise<std_msgs::Int8>(ps.ACTION_EXE_TOPIC,1000);
 
