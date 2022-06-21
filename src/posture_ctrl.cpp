@@ -59,6 +59,7 @@
       clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       action_execution.publish(exe);
       while((fstop-fstart) < req.duration){
+         action_execution.publish(exe);
          action_cmd.publish(cmd);
          clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       }
