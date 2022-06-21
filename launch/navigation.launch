@@ -42,4 +42,7 @@
   <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
   <remap from="cmd_vel" to="/cmd_vel_move" />
  </node>
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find unitree_a1)/rviz_cfg/unitree_rviz.rviz"></node>
+
 </launch>
