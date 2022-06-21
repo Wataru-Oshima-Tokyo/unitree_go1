@@ -30,8 +30,8 @@
       POSTURE();
       ~POSTURE();
  };
-   POSTURE::POSTURE(){};
-   POSTURE::~POSTURE(){};
+   POSTURE::POSTURE(){}
+   POSTURE::~POSTURE(){}
 
    bool POSTURE::actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res){
       geometry_msgs::Twist cmd;
@@ -41,16 +41,24 @@
          //pass through
       }else if (req.action == 1){
          //look up
+         cmd.linear.x = 1;
       }else if (req.action == 2){
          //look down
+         cmd.linear.x = -1;
       }else if (req.action == 3){
+         //look left
+         cmd.angular.z = 1;
+      }else if (req.action == 4){
+         //look right
+         cmd.angular.z = -1;
+      }else if (req.action ==5){
          //talk
       }
 
       clock_gettime(CLOCK_MONOTONIC, &start); fstart=(double)start.tv_sec + ((double)start.tv_nsec/1000000000.0);
       clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       action_execution.publish(exe);
-      while(fstop < req.duration){
+      while((fstop-fstart) < req.duration){
          action_cmd.publish(cmd);
          clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       }
