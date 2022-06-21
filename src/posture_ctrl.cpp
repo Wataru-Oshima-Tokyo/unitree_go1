@@ -10,17 +10,17 @@
  #include "std_srvs/Empty.h"
  
  #include <vector>
- 
- #include <map>
+
 
  class POSTURE{
    //  private:
 
     public:
+      ros::NodeHandle nh;
       ros::ServiceServer action_start;
       virtual bool actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res);
       ros::Publisher action_execution, action_cmd;
-      ros::NodeHandle nh;
+      
 
       const std::string ACTION_SERVICE_START = "/action/start";
       const std::string ACTION_CMD_TOPIC = "/cmd_vel_posture";
