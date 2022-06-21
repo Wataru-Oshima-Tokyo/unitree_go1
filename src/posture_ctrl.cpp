@@ -62,6 +62,8 @@
          action_cmd.publish(cmd);
          clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       }
+      geometry_msgs::Twist zero_cmd;
+      action_cmd.publish(zero_cmd);
       exe.data = false;
       action_execution.publish(exe);
       
