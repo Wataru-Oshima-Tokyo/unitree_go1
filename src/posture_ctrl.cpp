@@ -46,13 +46,13 @@
 
       clock_gettime(CLOCK_MONOTONIC, &start); fstart=(double)start.tv_sec + ((double)start.tv_nsec/1000000000.0);
       clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
-      action_execution.publish(exe);
+      // action_execution.publish(exe);
       while(fstop < req.duration){
          action_cmd.publish(cmd);
          clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       }
       exe.data = false;
-      action_execution.publish(exe);
+      // action_execution.publish(exe);
       
    }
 
