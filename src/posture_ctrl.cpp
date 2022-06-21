@@ -69,7 +69,7 @@
 
 
  int main (int argc, char** argv){
-   ros::init(argc, argv, "postrue services");
+   ros::init(argc, argv, "postrue_services");
    POSTURE ps;
    ps.action_start = ps.nh.advertiseService(ps.ACTION_SERVICE_START, &POSTURE::actions_srv, &ps);
    ps.action_cmd = ps.nh.advertise<geometry_msgs::Twist>(ps.ACTION_CMD_TOPIC,1000);
