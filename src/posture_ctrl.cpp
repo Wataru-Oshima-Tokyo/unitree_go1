@@ -4,10 +4,11 @@
 
  // Include CvBridge, Image Transport, Image msg
  #include "std_msgs/String.h"
- #include "std_msgs/Int8.h"
+ #include "std_msgs/Bool.h"
  #include "geometry_msgs/Twist.h"
  #include "unitree_a1/actions.h"
  #include "std_srvs/Empty.h"
+ 
  #include <vector>
  
  #include <map>
@@ -44,12 +45,12 @@
 
       clock_gettime(CLOCK_MONOTONIC, &start); fstart=(double)start.tv_sec + ((double)start.tv_nsec/1000000000.0);
       clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
-      action_execution.publish(0);
+      action_execution.publish(true);
       while(fstop < req.duration){
          action_cmd.publish(cmd);
          clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       }
-      action_execution.publish(1);
+      action_execution.publish(false);
       
    }
 
@@ -59,7 +60,7 @@
    POSTURE ps;
    ps.action_start = ps.nh.advertiseService(ps.ACTION_SERVICE_START, &POSTURE::actions_srv, &ps);
    ps.action_cmd = ps.nh.advertise<geometry_msgs::Twist>(ps.ACTION_CMD_TOPIC,1000);
-   ps.action_execution = ps.nh.advertise<std_msgs::Int8>(ps.ACTION_EXE_TOPIC,1000);
+   ps.action_execution = ps.nh.advertise<std_msgs::Bool>(ps.ACTION_EXE_TOPIC,1000);
 
  }
 
