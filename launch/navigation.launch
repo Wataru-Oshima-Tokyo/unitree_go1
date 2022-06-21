@@ -3,7 +3,7 @@
 
  <master auto="start"/>     
       <arg name="user_debug" default="false"/>
-    <param name ="/use_sim_time" value="true"/>
+    <param name ="/use_sim_time" value="false"/>
     <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find a1_description)/xacro/robot.xacro'
             DEBUG:=$(arg user_debug)"/>
 
@@ -42,4 +42,7 @@
   <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
   <remap from="cmd_vel" to="/cmd_vel_move" />
  </node>
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find unitree_a1)/rviz_cfg/unitree_rviz.rviz"></node>
+
 </launch>
