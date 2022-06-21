@@ -30,8 +30,8 @@
       POSTURE();
       ~POSTURE();
  };
-   POSTURE::POSTURE(){}
-   POSTURE::~POSTURE(){}
+   POSTURE::POSTURE(){};
+   POSTURE::~POSTURE(){};
 
    bool POSTURE::actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res){
       geometry_msgs::Twist cmd;
@@ -41,9 +41,9 @@
          //pass through
       }else if (req.action == 1){
          //look up
-      }else if (req.action ==2){
+      }else if (req.action == 2){
          //look down
-      }else if (req.action ==3){
+      }else if (req.action == 3){
          //talk
       }
 
