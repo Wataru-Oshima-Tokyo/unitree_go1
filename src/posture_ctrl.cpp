@@ -17,8 +17,7 @@
 
     public:
       ros::NodeHandle nh;
-      ros::NodeHandle private_nh("~");
-      nh.param("cmd_vel", cmd_vel_, std::string("cmd_vel"));
+
       ros::ServiceServer action_start;
       virtual bool actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res);
       ros::Publisher action_execution, action_cmd, cmd_vel_pub_;
@@ -33,7 +32,10 @@
       POSTURE();
       ~POSTURE();
  };
-   POSTURE::POSTURE(){}
+   POSTURE::POSTURE(){
+      ros::NodeHandle private_nh("~");
+      nh.param("cmd_vel", cmd_vel_, std::string("cmd_vel"));
+   }
    POSTURE::~POSTURE(){}
 
    bool POSTURE::actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res){
