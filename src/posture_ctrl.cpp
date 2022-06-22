@@ -27,6 +27,7 @@
       const std::string ACTION_EXE_TOPIC = "/cmd_vel_executing";
       struct timespec start, stop;
       double fstart, fstop;
+      std_msgs::Bool exe;
       POSTURE();
       ~POSTURE();
  };
@@ -35,7 +36,6 @@
 
    bool POSTURE::actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res){
       geometry_msgs::Twist cmd;
-      std_msgs::Bool exe;
       exe.data = true;
       action_execution.publish(exe);
       if(req.action =="passthrough"){
@@ -60,14 +60,13 @@
       clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       
       while((fstop-fstart) < req.duration){
-         action_execution.publish(exe);
          action_cmd.publish(cmd);
          clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       }
       geometry_msgs::Twist zero_cmd;
       action_cmd.publish(zero_cmd);
       exe.data = false;
-      action_execution.publish(exe);
+      
       
    }
 
@@ -75,10 +74,16 @@
  int main (int argc, char** argv){
    ros::init(argc, argv, "postrue_services");
    POSTURE ps;
+   ros::Rate rate_;
+   rate_(100);
    ps.action_start = ps.nh.advertiseService(ps.ACTION_SERVICE_START, &POSTURE::actions_srv, &ps);
    ps.action_cmd = ps.nh.advertise<geometry_msgs::Twist>(ps.ACTION_CMD_TOPIC,1000);
    ps.action_execution = ps.nh.advertise<std_msgs::Bool>(ps.ACTION_EXE_TOPIC,1000);
-   ros::spin();
+   while(ros::ok()){
+      ps.action_execution.publish(ps.exe);
+      rate_.sleep();
+      ros::spinOnce();
+   }
    return 0;
  }
 
