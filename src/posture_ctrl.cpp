@@ -17,9 +17,10 @@
 
     public:
       ros::NodeHandle nh;
+      nh.param("cmd_vel", cmd_vel_, std::string("cmd_vel"));
       ros::ServiceServer action_start;
       virtual bool actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res);
-      ros::Publisher action_execution, action_cmd;
+      ros::Publisher action_execution, action_cmd, cmd_vel_pub_;
       
 
       const std::string ACTION_SERVICE_START = "/action/start";
@@ -56,17 +57,20 @@
       }else if (req.action =="talk"){
          //talk
       }
-
+      ROS_INFO_STREAM("Executing");
       clock_gettime(CLOCK_MONOTONIC, &start); fstart=(double)start.tv_sec + ((double)start.tv_nsec/1000000000.0);
       clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       ros::Rate _rate(1000);
+      geometry_msgs::Twist zero_cmd;
       while((fstop-fstart) < req.duration){
          action_cmd.publish(cmd);
          action_execution.publish(exe);
          clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
+         ROS_INFO_STREAM(".");
          _rate.sleep();
+         cmd_vel_pub_.publish(zero_cmd);
       }
-      geometry_msgs::Twist zero_cmd;
+      ROS_INFO_STREAM("Finished");      
       action_cmd.publish(zero_cmd);
       exe.data = false;
       
@@ -80,6 +84,7 @@
    ros::Rate rate_(100.0);
    ps.action_start = ps.nh.advertiseService(ps.ACTION_SERVICE_START, &POSTURE::actions_srv, &ps);
    ps.action_cmd = ps.nh.advertise<geometry_msgs::Twist>(ps.ACTION_CMD_TOPIC,1000);
+   ps.cmd_vel_pub_ = ps.nh.advertise<geometry_msgs::Twist>(ps.cmd_vel_,1000);
    ps.action_execution = ps.nh.advertise<std_msgs::Bool>(ps.ACTION_EXE_TOPIC,1000);
    while(ros::ok()){
       ps.action_execution.publish(ps.exe);
