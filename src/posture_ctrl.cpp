@@ -24,7 +24,7 @@
 
       const std::string ACTION_SERVICE_START = "/action/start";
       const std::string ACTION_CMD_TOPIC = "/cmd_vel_posture";
-      const std::string ACTION_EXE_TOPIC = "cmd_vel_executing";
+      const std::string ACTION_EXE_TOPIC = "/cmd_vel_executing";
       struct timespec start, stop;
       double fstart, fstop;
       POSTURE();
@@ -37,27 +37,28 @@
       geometry_msgs::Twist cmd;
       std_msgs::Bool exe;
       exe.data = true;
-      if(req.action ==0){
+      action_execution.publish(exe);
+      if(req.action =="passthrough"){
          //pass through
-      }else if (req.action == 1){
+      }else if (req.action == "lookup"){
          //look up
          cmd.linear.x = 1;
-      }else if (req.action == 2){
+      }else if (req.action == "lookdown"){
          //look down
          cmd.linear.x = -1;
-      }else if (req.action == 3){
+      }else if (req.action == "lookleft"){
          //look left
          cmd.angular.z = 1;
-      }else if (req.action == 4){
+      }else if (req.action == "lookright"){
          //look right
          cmd.angular.z = -1;
-      }else if (req.action ==5){
+      }else if (req.action =="talk"){
          //talk
       }
 
       clock_gettime(CLOCK_MONOTONIC, &start); fstart=(double)start.tv_sec + ((double)start.tv_nsec/1000000000.0);
       clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
-      action_execution.publish(exe);
+      
       while((fstop-fstart) < req.duration){
          action_execution.publish(exe);
          action_cmd.publish(cmd);
