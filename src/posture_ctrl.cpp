@@ -17,6 +17,7 @@
 
     public:
       ros::NodeHandle nh;
+      ros::NodeHandle private_nh("~");
       nh.param("cmd_vel", cmd_vel_, std::string("cmd_vel"));
       ros::ServiceServer action_start;
       virtual bool actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res);
