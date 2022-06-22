@@ -22,7 +22,7 @@
       virtual bool actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res);
       ros::Publisher action_execution, action_cmd, cmd_vel_pub_;
       
-
+      std::string cmd_vel_;
       const std::string ACTION_SERVICE_START = "/action/start";
       const std::string ACTION_CMD_TOPIC = "/cmd_vel_posture";
       const std::string ACTION_EXE_TOPIC = "/cmd_vel_executing";
