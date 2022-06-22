@@ -62,7 +62,7 @@
       
       while((fstop-fstart) < req.duration){
          action_cmd.publish(cmd);
-         action_execution.publish(ps.exe);
+         action_execution.publish(exe);
          clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       }
       geometry_msgs::Twist zero_cmd;
