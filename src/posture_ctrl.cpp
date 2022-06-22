@@ -35,6 +35,7 @@
    POSTURE::~POSTURE(){}
 
    bool POSTURE::actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res){
+      ROS_INFO_STREAM("Called!");
       geometry_msgs::Twist cmd;
       exe.data = true;
       action_execution.publish(exe);
@@ -61,6 +62,7 @@
       
       while((fstop-fstart) < req.duration){
          action_cmd.publish(cmd);
+         action_execution.publish(ps.exe);
          clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
       }
       geometry_msgs::Twist zero_cmd;
