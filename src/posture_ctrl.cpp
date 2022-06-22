@@ -59,11 +59,12 @@
 
       clock_gettime(CLOCK_MONOTONIC, &start); fstart=(double)start.tv_sec + ((double)start.tv_nsec/1000000000.0);
       clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
-      
+      ros::Rate _rate(1000);
       while((fstop-fstart) < req.duration){
          action_cmd.publish(cmd);
          action_execution.publish(exe);
          clock_gettime(CLOCK_MONOTONIC, &stop); fstop=(double)stop.tv_sec + ((double)stop.tv_nsec/1000000000.0);
+         _rate.sleep();
       }
       geometry_msgs::Twist zero_cmd;
       action_cmd.publish(zero_cmd);
