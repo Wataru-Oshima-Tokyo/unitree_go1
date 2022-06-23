@@ -1,11 +1,31 @@
 <launch>
-  <param name ="/use_sim_time" value="false"/>
+  <arg name="user_debug" default="false"/>
+  <arg name ="cmd_vel" default="cmd_vel_move"/> 
+ <param name ="/use_sim_time" value="false"/>
    <!-- launch the /cmd_vel, /odom,/tf -->
 	<include file="$(find unitree_legged_real)/launch/real.launch"></include>
-
+      <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find a1_description)/xacro/robot.xacro' DEBUG:=$(arg user_debug)"/>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    </node>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"></node>
   <node name="control_lcm" pkg="unitree_legged_real" type="control_lcm" respawn="false" output="screen"></node>   
 	<node name="odom_node" pkg="unitree_legged_real" type="odom_node" respawn="false" output="screen"></node>
   <node name="posture_node" pkg="unitree_a1" type="posture_srv" respawn="false" output="screen"></node>
   <!-- launch the rplidar-->
 	<include file="$(find rplidar_ros)/launch/rplidar_s1.launch"></include>
+
+ <!-- Run the map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find unitree_a1)/map/map.yaml"></node>
+
+  
+
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
+       <rosparam command="load" file="$(find unitree_a1)/config/amcl_params_tf.yaml"/>
+ </node>
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_laser" args="0 0 0 0 0 0  base_link laser"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_base" args="0 0 0.2 0 0 0 base_link base"/>
+
+
 </launch>
