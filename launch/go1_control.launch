@@ -12,7 +12,7 @@
   
   <node name="twist_lcm" pkg="unitree_legged_real" type="twist_lcm" respawn="false" output="screen">
        <param name="cmd_vel" value="$(arg cmd_vel)"/>	
-       <param name="cmd_vel_posture" value="$(arg cmd_vel_posture)"/>
+       <param name="cmd_vel_posture" value="$(arg cmd_vel_pos)"/>
   </node> 
   <node pkg="unitree_legged_real" type="odom_lcm" name="node_odom_lcm" respawn="false" output="screen"/>
   
