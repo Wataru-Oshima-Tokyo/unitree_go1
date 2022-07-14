@@ -1,0 +1,52 @@
+
+<launch>
+
+ <master auto="start"/>     
+   
+    <param name ="/use_sim_time" value="false"/>
+    <arg name ="cmd_vel" default="cmd_vel_move"/>
+   
+ <!-- launch the waypoints nav -->
+        <include file="$(find fulanghua_waypoints_nav)/launch/nav.launch"></include>
+
+ <!--- Run Waypoints -->
+        <include file="$(find orne_waypoints_editor)/launch/edit_waypoints_viz.launch"></include>
+ 
+ <!--node pkg="unitree_a1" type="posture_srv" name="a1_posture" output="screen">
+	<param name="cmd_vel" value="$(arg cmd_vel)"/>
+  </node-->
+
+
+ <!-- Run the map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find unitree_a1)/map/map.yaml"></node>
+
+  
+
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
+       <rosparam command="load" file="$(find unitree_a1)/config/amcl_params_tf.yaml"/>
+ </node>
+
+  <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_base" args="0 0 0 0 0 0 map base"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_laser" args="0 0 0 0 0 0  base_link laser"/>
+  <!--node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_base" args="0 0 0.2 0 0 0 base_link base"/-->
+
+
+
+
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+   <rosparam file="$(find unitree_a1)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+   <rosparam file="$(find unitree_a1)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+   <rosparam file="$(find unitree_a1)/config/local_costmap_params.yaml" command="load" />
+   <rosparam file="$(find unitree_a1)/config/global_costmap_params.yaml" command="load" />
+
+   <rosparam file="$(find unitree_a1)/config/base_local_planner_params.yaml" command="load" />
+   <!--rosparam file="$(find unitree_a1)/config/nav_obstacles_params.yaml"        command="load" /-->
+  <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+  <remap from="cmd_vel" to="$(arg cmd_vel)" />
+ </node>
+
+
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find unitree_a1)/rviz_cfg/unitree_rviz.rviz"></node>
+
+</launch>

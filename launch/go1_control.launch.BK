@@ -1,0 +1,25 @@
+<launch>
+  <arg name ="cmd_vel" default="cmd_vel_move"/> 
+ <param name ="/use_sim_time" value="false"/>
+   <!-- launch the /cmd_vel, /odom,/tf -->
+	<include file="$(find unitree_legged_real)/launch/real.launch"></include>
+ 
+  <node name="posture_node" pkg="unitree_go1" type="posture_srv" respawn="false" output="screen"></node>
+  <!-- launch the rplidar-->
+	<include file="$(find rplidar_ros)/launch/rplidar_s1.launch"></include>
+
+ <!-- Run the map server -->
+    <!--node name="map_server" pkg="map_server" type="map_server" args="$(find unitree_a1)/map/map.yaml"></node-->
+
+  
+
+  <!--node pkg="amcl" type="amcl" name="amcl" output="screen">
+       <rosparam command="load" file="$(find unitree_a1)/config/amcl_params_tf.yaml"/>
+ </node-->
+
+  <!--node pkg="tf2_ros" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_laser" args="0 0 0 0 0 0  base_link laser"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_base" args="0 0 0.2 0 0 0 base_link base"/-->
+
+
+</launch>

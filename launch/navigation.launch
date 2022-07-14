@@ -12,23 +12,23 @@
  <!--- Run Waypoints -->
         <include file="$(find orne_waypoints_editor)/launch/edit_waypoints_viz.launch"></include>
  
- <node pkg="unitree_a1" type="posture_srv" name="a1_posture" output="screen">
+ <node pkg="unitree_go1" type="posture_srv" name="go1_posture" output="screen">
 	<param name="cmd_vel" value="$(arg cmd_vel)"/>
   </node>
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-   <rosparam file="$(find unitree_a1)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
-   <rosparam file="$(find unitree_a1)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
-   <rosparam file="$(find unitree_a1)/config/local_costmap_params.yaml" command="load" />
-   <rosparam file="$(find unitree_a1)/config/global_costmap_params.yaml" command="load" />
+   <rosparam file="$(find unitree_go1)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+   <rosparam file="$(find unitree_go1)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+   <rosparam file="$(find unitree_go1)/params/local_costmap_params.yaml" command="load" />
+   <rosparam file="$(find unitree_go1)/params/global_costmap_params.yaml" command="load" />
 
-   <rosparam file="$(find unitree_a1)/config/base_local_planner_params.yaml" command="load" />
-   <!--rosparam file="$(find unitree_a1)/config/nav_obstacles_params.yaml"        command="load" /-->
+   <rosparam file="$(find unitree_go1)/params/base_local_planner_params.yaml" command="load" />
+   <!--rosparam file="$(find unitree_go1)/params/nav_obstacles_params.yaml"        command="load" /-->
   <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
   <remap from="cmd_vel" to="$(arg cmd_vel)" />
  </node>
 
 
-  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find unitree_a1)/rviz_cfg/unitree_rviz.rviz"></node>
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find unitree_go1)/rviz_cfg/unitree_rviz.rviz"></node>
 
 </launch>

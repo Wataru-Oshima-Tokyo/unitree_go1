@@ -6,7 +6,7 @@
  #include "std_msgs/String.h"
  #include "std_msgs/Bool.h"
  #include "geometry_msgs/Twist.h"
- #include "unitree_a1/actions.h"
+ #include "unitree_go1/actions.h"
  #include "std_srvs/Empty.h"
  
  #include <vector>
@@ -19,7 +19,7 @@
       ros::NodeHandle nh;
 
       ros::ServiceServer action_start;
-      virtual bool actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res);
+      virtual bool actions_srv(unitree_go1::actions::Request& req, unitree_go1::actions::Response& res);
       ros::Publisher action_execution, action_cmd, cmd_vel_pub_;
       
       std::string cmd_vel_;
@@ -38,7 +38,7 @@
    }
    POSTURE::~POSTURE(){}
 
-   bool POSTURE::actions_srv(unitree_a1::actions::Request& req, unitree_a1::actions::Response& res){
+   bool POSTURE::actions_srv(unitree_go1::actions::Request& req, unitree_go1::actions::Response& res){
       ROS_INFO_STREAM("Called!");
       geometry_msgs::Twist cmd;
       exe.data = true;
