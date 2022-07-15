@@ -8,3 +8,10 @@ global_costmap:
    resolution: 0.01
    transform_tolerance: 1.0
    map_type: costmap
+   plugins:
+      - {name: static_layer,            type: "costmap_2d::StaticLayer"}
+      - {name: obstacle_layer,          type: "costmap_2d::VoxelLayer"}
+      - {name: obstacle_layer_voxel_front,    type: "costmap_2d::VoxelLayer"}
+      - {name: obstacle_layer_voxel_left,    type: "costmap_2d::VoxelLayer"}
+      - {name: obstacle_layer_voxel_right,    type: "costmap_2d::VoxelLayer"}
+      - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}

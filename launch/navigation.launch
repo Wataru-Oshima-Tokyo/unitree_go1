@@ -1,11 +1,18 @@
-
 <launch>
 
  <master auto="start"/>     
    
     <param name ="/use_sim_time" value="false"/>
     <arg name ="cmd_vel" default="cmd_vel_move"/>
-   
+    <arg name ="target_frame" default="trunk"/>
+    <arg name ="camera1" default="/camera1/point_cloud_face" />
+    <arg name ="camera3" default="/camera3/point_cloud_left" />
+    <arg name ="camera4" default="/camera4/point_cloud_right" />
+  <!-- point cloud to laser -->
+        <!-- <include file="$(find pointcloud_to_laserscan)/launch/go1_pc_to_laser.launch"></include> -->
+
+
+  
  <!-- launch the waypoints nav -->
         <include file="$(find fulanghua_waypoints_nav)/launch/nav.launch"></include>
 
@@ -15,6 +22,18 @@
  <node pkg="unitree_go1" type="posture_srv" name="go1_posture" output="screen">
 	<param name="cmd_vel" value="$(arg cmd_vel)"/>
   </node>
+   <node pkg="unitree_go1" type="pcl_node" name="pcl_node1" output="screen">
+       <param name="target_frame" value="$(arg target_frame)"/>
+       <param name="topic_name" value="$(arg camera1)"/>
+   </node>
+   <node pkg="unitree_go1" type="pcl_node" name="pcl_node3" output="screen">
+       <param name="target_frame" value="$(arg target_frame)"/>
+       <param name="topic_name" value="$(arg camera3)"/>
+   </node>
+   <node pkg="unitree_go1" type="pcl_node" name="pcl_node4" output="screen">
+       <param name="target_frame" value="$(arg target_frame)"/>
+       <param name="topic_name" value="$(arg camera4)"/>
+   </node>
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
    <rosparam file="$(find unitree_go1)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
