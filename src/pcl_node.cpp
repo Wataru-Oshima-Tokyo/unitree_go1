@@ -30,7 +30,6 @@ private:
   ros::NodeHandle _nh;
   ros::NodeHandle _pnh;
   std::string _topic_name, _threshold
-
   ros::Subscriber _sub_points;
   std::string _pub_topic_name;
   std::string _target_frame;
@@ -98,7 +97,6 @@ private:
       _seg.setMethodType(pcl::SAC_RANSAC);
       _seg.setDistanceThreshold(std::stod(_threshold)); //0.04
       _seg.setInputCloud(cloud_src);
-
       _seg.segment(*_inliers, *_coefficients);
       double finishRemovePlaneRatio = 0.5;
       _extract.setInputCloud(cloud_src);

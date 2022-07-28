@@ -5,6 +5,7 @@ local_costmap:
    publish_frequency: 3.0
    static_map: false
    rolling_window: true
+<<<<<<< HEAD
    width: 4.0
    height: 4.0
    resolution: 0.01
@@ -13,3 +14,9 @@ local_costmap:
       - {name: static_layer,        type: "costmap_2d::StaticLayer"}
       - {name: obstacle_layer,      type: "costmap_2d::VoxelLayer"}
       - {name: obstacle_layer_voxel,    type: "costmap_2d::VoxelLayer"}
+=======
+   width: 3.0
+   height: 3.0
+   resolution: 0.01
+   transform_tolerance: 1.0
+>>>>>>> 4bc920d140f9603549b858d1c32eb8905bf15b5a

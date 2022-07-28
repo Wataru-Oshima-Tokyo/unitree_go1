@@ -11,6 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   message_generation
+  pcl_ros
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -134,6 +136,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(sim_time_node src/sim_time.cpp)
 add_executable(posture_srv src/posture_ctrl.cpp)
+add_executable(pcl_node src/pcl_node.cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -144,6 +147,7 @@ add_executable(posture_srv src/posture_ctrl.cpp)
 ## same as for the library above
 add_dependencies(sim_time_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(posture_srv ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(pcl_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(sim_time_node
@@ -152,6 +156,10 @@ add_dependencies(posture_srv ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORT
 target_link_libraries(posture_srv
 ${catkin_LIBRARIES}
 )
+target_link_libraries(pcl_node
+${catkin_LIBRARIES}
+)
+
 #############
 ## Install ##
 #############
