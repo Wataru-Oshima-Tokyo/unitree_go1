@@ -20,6 +20,7 @@
   <!-- launch the rplidar-->
 	<include file="$(find rplidar_ros)/launch/rplidar_s1.launch"></include>
 
+
  <!-- Run the map server -->
     <node name="map_server" pkg="map_server" type="map_server" args="$(find unitree_go1)/map/map_sh.yaml"></node>
 
@@ -28,9 +29,9 @@
   <node pkg="amcl" type="amcl" name="amcl" output="screen">
        <rosparam command="load" file="$(find unitree_go1)/params/amcl_params_tf.yaml"/>
  </node>
-
+  <node pkg="tf2_ros" type="static_transform_publisher" name="mapt_to_odom" args="0 0 0 0 0 0 map  odom"/>
   <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_laser" args="0 0 0 0 0 0  base_link  laser"/>
-  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_base" args="0 0 0.2 0 0 0 base_link base"/>
-  <node pkg="tf2_ros" type="static_transform_publisher" name="base_to_trunk" args="0 0 0.2 0 0 0 base trunk"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_link_to_base" args="0 0 0.25 0 0 0 base_link base"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="base_to_trunk" args="0 0 0 0 0 0 base trunk"/>
 
 </launch>

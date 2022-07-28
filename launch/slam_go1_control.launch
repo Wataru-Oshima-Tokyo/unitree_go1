@@ -1,0 +1,18 @@
+<launch>
+  <arg name="user_debug" default="false"/>
+  <arg name ="cmd_vel" default="cmd_vel_move"/> 
+  <arg name ="cmd_vel_pos" default="cmd_vel_posture"/> 
+ <param name ="/use_sim_time" value="false"/>
+ 
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find go1_description)/xacro/robot.xacro' DEBUG:=$(arg user_debug)"/>
+
+  <!-- launch the /cmd_vel, /odom,/tf -->
+	<include file="$(find unitree_legged_real)/launch/_real.launch"></include>  
+  <node name="twist_lcm" pkg="unitree_legged_real" type="twist_lcm" respawn="false" output="screen">
+       <param name="cmd_vel" value="$(arg cmd_vel)"/>	
+       <param name="cmd_vel_posture" value="$(arg cmd_vel_pos)"/>
+  </node>   
+  <node name="posture_node" pkg="unitree_go1" type="posture_srv" respawn="false" output="screen"></node>
+  
+
+</launch>
