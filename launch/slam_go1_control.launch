@@ -14,5 +14,7 @@
   </node>   
   <node name="posture_node" pkg="unitree_go1" type="posture_srv" respawn="false" output="screen"></node>
   
+   <!-- Run the map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find unitree_go1)/map/map_sh.yaml"></node>
 
 </launch>
